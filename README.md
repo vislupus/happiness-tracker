@@ -38,4 +38,6 @@ A beautiful, modern Flutter application for tracking your daily happiness levels
 
 ## 📱 Screenshots
 
-*Add your screenshots here*
+| Home | Charts |
+|:---:|:---:|
+| ![Home](screenshots/Screenshot_2025-12-29-09-30-12-635_com.example.happiness_tracker.jpg) | ![Practice Mode](screenshots/Screenshot_2025-12-29-09-30-25-196_com.example.happiness_tracker.jpg) 
