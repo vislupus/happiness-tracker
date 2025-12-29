@@ -1,0 +1,57 @@
+name: happiness_tracker
+description: A happiness tracking application with beautiful charts and calendar.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.10.3
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  
+  # State Management
+  provider: ^6.1.1
+  
+  # Database
+  sqflite: ^2.3.0
+  sqflite_common_ffi: ^2.3.0+2
+  path: ^1.8.3
+  path_provider: ^2.1.1
+  
+  # Charts
+  fl_chart: ^1.1.1
+  
+  # File handling
+  file_picker: ^8.1.6
+  share_plus: ^10.1.3
+  
+  # Preferences
+  cupertino_icons: ^1.0.8
+  shared_preferences: ^2.2.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  flutter_launcher_icons: ^0.14.1
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/icon.png"
+  adaptive_icon_background: "#FFFFFF"
+  adaptive_icon_foreground: "assets/icon.png"
+  windows:
+    generate: true
+    image_path: "assets/icon.png"
+    icon_size: 256
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/icon.png
+  
