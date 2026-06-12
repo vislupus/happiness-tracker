@@ -1,4 +1,4 @@
-package com.example.happiness_tracker
+package com.vislupus.happiness_tracker
 
 import io.flutter.embedding.android.FlutterActivity
 
