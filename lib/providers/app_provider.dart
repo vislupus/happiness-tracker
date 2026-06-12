@@ -37,6 +37,9 @@ class AppProvider extends ChangeNotifier {
   List<Tag> _selectedDayTags = [];
   List<Tag> _allTags = [];
   Map<DateTime, HappinessEntry> _monthEntries = {};
+  DateTime? _loadedMonth;
+  int _monthLoadToken = 0;
+  bool _isMonthDataLoading = false;
   List<Event> _selectedDayEvents = [];
   List<Event> _monthEvents = [];
   List<Event> _allEvents = [];
@@ -52,6 +55,7 @@ class AppProvider extends ChangeNotifier {
   List<Tag> get selectedDayTags => _selectedDayTags;
   List<Tag> get allTags => _allTags;
   Map<DateTime, HappinessEntry> get monthEntries => _monthEntries;
+  bool get isMonthDataLoading => _isMonthDataLoading;
   List<Event> get selectedDayEvents => _selectedDayEvents;
   List<Event> get monthEvents => _monthEvents;
   List<Event> get allEvents => _allEvents;
@@ -59,6 +63,21 @@ class AppProvider extends ChangeNotifier {
   bool get eventsExpanded => _eventsExpanded;
   TagSortOption get tagSortOption => _tagSortOption;
   EventSortOption get eventSortOption => _eventSortOption;
+
+  /// Average happiness for the currently selected day
+  double? get selectedDayAverageHappiness => _selectedDayEntry?.averageHappiness;
+
+  /// How many of the three daily values are filled for the selected day
+  int get selectedDayFilledValuesCount {
+    final entry = _selectedDayEntry;
+    if (entry == null) return 0;
+
+    return [
+      entry.morningValue,
+      entry.afternoonValue,
+      entry.eveningValue,
+    ].whereType<double>().length;
+  }
 
   /// Check if a date is today
   bool isToday(DateTime date) {
@@ -73,6 +92,36 @@ class AppProvider extends ChangeNotifier {
     return date.year == _selectedDate.year &&
         date.month == _selectedDate.month &&
         date.day == _selectedDate.day;
+  }
+
+  /// Check if the cached month data belongs to the requested month.
+  ///
+  /// This prevents temporary red missing-value borders while a newly
+  /// selected month is still loading from the database.
+  bool isMonthDataLoadedFor(DateTime date) {
+    final loadedMonth = _loadedMonth;
+    if (_isMonthDataLoading || loadedMonth == null) return false;
+
+    return loadedMonth.year == date.year && loadedMonth.month == date.month;
+  }
+
+  /// Check if a past day has missing happiness values.
+  ///
+  /// Today and future dates are intentionally ignored.
+  bool hasMissingHappinessValuesBeforeToday(DateTime date) {
+    final day = DateTime(date.year, date.month, date.day);
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+
+    if (!day.isBefore(today)) return false;
+    if (!isMonthDataLoadedFor(day)) return false;
+
+    final entry = getEntryForDate(day);
+    if (entry == null) return true;
+
+    return entry.morningValue == null ||
+        entry.afternoonValue == null ||
+        entry.eveningValue == null;
   }
 
   /// Initialize provider
@@ -176,8 +225,7 @@ class AppProvider extends ChangeNotifier {
   /// Change current month
   Future<void> changeMonth(int year, int month) async {
     _currentMonth = DateTime(year, month, 1);
-    await loadMonthData(year, month);
-    notifyListeners();
+    await loadMonthData(year, month, notify: true);
   }
 
   /// Go to previous month
@@ -193,9 +241,30 @@ class AppProvider extends ChangeNotifier {
   }
 
   /// Load month data
-  Future<void> loadMonthData(int year, int month) async {
-    _monthEntries = await _db.getHappinessEntriesForMonth(year, month);
-    _monthEvents = await _db.getEventsForMonth(year, month);
+  Future<void> loadMonthData(
+    int year,
+    int month, {
+    bool notify = false,
+  }) async {
+    final requestedMonth = DateTime(year, month, 1);
+    final loadToken = ++_monthLoadToken;
+
+    _isMonthDataLoading = true;
+    _loadedMonth = null;
+    if (notify) notifyListeners();
+
+    final entries = await _db.getHappinessEntriesForMonth(year, month);
+    final events = await _db.getEventsForMonth(year, month);
+
+    // Ignore outdated responses if the user changes months quickly.
+    if (loadToken != _monthLoadToken) return;
+
+    _monthEntries = entries;
+    _monthEvents = events;
+    _loadedMonth = requestedMonth;
+    _isMonthDataLoading = false;
+
+    if (notify) notifyListeners();
   }
 
   /// Update happiness value

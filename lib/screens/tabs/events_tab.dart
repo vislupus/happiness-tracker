@@ -278,7 +278,13 @@ class _EventsTabState extends State<EventsTab> {
 
   Widget _buildEventsList(AppProvider provider, List<Event> events) {
     return ListView.builder(
-      padding: const EdgeInsets.all(AppDimensions.paddingM),
+      // padding: const EdgeInsets.all(AppDimensions.paddingM),
+      padding: const EdgeInsets.fromLTRB(
+        AppDimensions.paddingM,
+        AppDimensions.paddingM,
+        AppDimensions.paddingM,
+        AppDimensions.paddingS,
+      ),
       itemCount: events.length,
       itemBuilder: (context, index) {
         final event = events[index];

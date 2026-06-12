@@ -138,6 +138,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
   /// Build the calendar grid for a specific month
   Widget _buildCalendarGrid(BuildContext context, AppProvider provider, DateTime month) {
     final weeks = _getWeeksInMonth(month);
+    final canShowMissingBorders = provider.isMonthDataLoadedFor(month);
     
     return Padding(
       padding: const EdgeInsets.all(AppDimensions.paddingS),
@@ -146,18 +147,65 @@ class _CalendarWidgetState extends State<CalendarWidget> {
           return Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: week.map((date) {
-              return CalendarDayCell(
-                date: date,
-                isCurrentMonth: date.month == month.month,
-                isToday: provider.isToday(date),
-                isSelected: provider.isSelected(date),
-                entry: provider.getEntryForDate(date),
-                onTap: () => provider.selectDate(date),
+              return _buildDayCell(
+                provider,
+                date,
+                month,
+                canShowMissingBorders,
               );
             }).toList(),
           );
         }).toList(),
       ),
+    );
+  }
+
+  /// Build one calendar day cell.
+  ///
+  /// Past days with missing happiness values get a red border. Today and
+  /// future days are ignored, as requested.
+  Widget _buildDayCell(
+    AppProvider provider,
+    DateTime date,
+    DateTime month,
+    bool canShowMissingBorders,
+  ) {
+    final isCurrentMonth = date.month == month.month;
+    final showMissingBorder = isCurrentMonth &&
+        canShowMissingBorders &&
+        provider.hasMissingHappinessValuesBeforeToday(date);
+
+    final dayCell = CalendarDayCell(
+      date: date,
+      isCurrentMonth: isCurrentMonth,
+      isToday: provider.isToday(date),
+      isSelected: provider.isSelected(date),
+      entry: provider.getEntryForDate(date),
+      onTap: () => provider.selectDate(date),
+    );
+
+    if (!showMissingBorder) {
+      return dayCell;
+    }
+
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        dayCell,
+        IgnorePointer(
+          child: Container(
+            width: AppDimensions.calendarDayCellSize - 2,
+            height: AppDimensions.calendarDayCellSize - 2,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(AppDimensions.radiusM),
+              border: Border.all(
+                color: AppColors.calendarMissingValueBorder,
+                width: AppDimensions.calendarMissingValueBorderWidth,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 

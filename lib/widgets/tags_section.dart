@@ -28,6 +28,13 @@ class _TagsSectionState extends State<TagsSection> {
     super.dispose();
   }
 
+  int _sortTagsByUsage(Tag a, Tag b) {
+    final usageCompare = b.usageCount.compareTo(a.usageCount);
+    if (usageCompare != 0) return usageCompare;
+
+    return a.name.toLowerCase().compareTo(b.name.toLowerCase());
+  }
+
   Future<void> _createAndAddTag(AppProvider provider) async {
     final tagName = _tagController.text.trim();
     if (tagName.isEmpty || _isCreating) return;
@@ -95,7 +102,8 @@ class _TagsSectionState extends State<TagsSection> {
         // Filter out already selected tags
         final availableTags = allTags
             .where((tag) => !provider.isTagAddedToSelectedDay(tag))
-            .toList();
+            .toList()
+          ..sort(_sortTagsByUsage);
 
         return Container(
           padding: const EdgeInsets.all(AppDimensions.sliderCardPadding),

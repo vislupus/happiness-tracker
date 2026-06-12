@@ -277,7 +277,13 @@ class _TagsTabState extends State<TagsTab> {
 
   Widget _buildTagsList(AppProvider provider, List<Tag> tags) {
     return ListView.builder(
-      padding: const EdgeInsets.all(AppDimensions.paddingM),
+      // padding: const EdgeInsets.all(AppDimensions.paddingM),
+      padding: const EdgeInsets.fromLTRB(
+        AppDimensions.paddingM,
+        AppDimensions.paddingM,
+        AppDimensions.paddingM,
+        AppDimensions.paddingS,
+      ),
       itemCount: tags.length,
       itemBuilder: (context, index) {
         final tag = tags[index];

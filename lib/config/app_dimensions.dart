@@ -29,6 +29,7 @@ class AppDimensions {
   static const double calendarWeekdayFontSize = 12.0;
   static const double calendarMonthFontSize = 20.0;
   static const double calendarTodayBorderWidth = 2.0;
+  static const double calendarMissingValueBorderWidth = 1.1;
   static const double calendarSelectedIndicatorSize = 40.0;
   static const double calendarEventDotSize = 6.0;
   static const double calendarEventDotSpacing = 2.0;

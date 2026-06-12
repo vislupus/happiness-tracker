@@ -16,16 +16,26 @@ class CalendarTab extends StatelessWidget {
     return Consumer<AppProvider>(
       builder: (context, provider, child) {
         return SingleChildScrollView(
-          padding: const EdgeInsets.all(AppDimensions.paddingM),
+          padding: const EdgeInsets.fromLTRB(
+            AppDimensions.paddingM,
+            AppDimensions.paddingM,
+            AppDimensions.paddingM,
+            AppDimensions.paddingS,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Calendar widget
               const CalendarWidget(),
               
-              const SizedBox(height: AppDimensions.paddingL),
+              const SizedBox(height: AppDimensions.paddingM),
+
+              // Separate daily average section
+              const DailyAverageSection(),
               
-              // Happiness sliders (картата е премахната)
+              const SizedBox(height: AppDimensions.paddingM),
+              
+              // Happiness sliders
               const HappinessSliders(),
               
               const SizedBox(height: AppDimensions.paddingM),
@@ -38,8 +48,7 @@ class CalendarTab extends StatelessWidget {
               // Tags section
               const TagsSection(),
               
-              // Bottom spacing for navigation bar
-              const SizedBox(height: AppDimensions.paddingXL),
+              const SizedBox(height: AppDimensions.paddingS),
             ],
           ),
         );

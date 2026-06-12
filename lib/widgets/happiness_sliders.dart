@@ -6,6 +6,137 @@ import '../config/app_strings.dart';
 import '../config/app_config.dart';
 import '../providers/app_provider.dart';
 
+/// Separate card showing the average happiness for the selected day.
+/// It is placed above the Happiness Level sliders in CalendarTab.
+class DailyAverageSection extends StatelessWidget {
+  const DailyAverageSection({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<AppProvider>(
+      builder: (context, provider, child) {
+        final average = provider.selectedDayAverageHappiness;
+        final filledValuesCount = provider.selectedDayFilledValuesCount;
+        final isToday = provider.isToday(provider.selectedDate);
+        final hasAverage = average != null;
+
+        final displayValue = hasAverage
+            ? AppStrings.formatHappinessValue(average)
+            : '-';
+        final averageColor = hasAverage
+            ? AppColors.getHappinessColor(average)
+            : AppColors.backgroundTertiary;
+        final averageColorDark = hasAverage
+            ? AppColors.getHappinessColorDark(average)
+            : AppColors.textTertiary;
+        final cardBackground = hasAverage
+            ? averageColor.withValues(alpha: 0.15)
+            : AppColors.backgroundTertiary;
+        final borderColor = hasAverage
+            ? averageColor.withValues(alpha: 0.3)
+            : AppColors.inputBorder;
+
+        return Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(AppDimensions.sliderCardPadding),
+          decoration: BoxDecoration(
+            color: AppColors.cardBackground,
+            borderRadius: BorderRadius.circular(AppDimensions.radiusL),
+            border: Border.all(
+              color: AppColors.cardBorder,
+              width: AppDimensions.cardBorderWidth,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.shadowColor,
+                blurRadius: 10,
+                offset: const Offset(0, 2),
+              ),
+            ],
+          ),
+          child: Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(AppDimensions.paddingM),
+            decoration: BoxDecoration(
+              color: cardBackground,
+              borderRadius: BorderRadius.circular(AppDimensions.radiusM),
+              border: Border.all(
+                color: borderColor,
+                width: 1,
+              ),
+            ),
+            child: Row(
+              children: [
+                Container(
+                  width: 44,
+                  height: 44,
+                  decoration: BoxDecoration(
+                    color: AppColors.primaryColor.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(AppDimensions.radiusM),
+                  ),
+                  child: const Icon(
+                    Icons.calculate_rounded,
+                    color: AppColors.primaryColor,
+                    size: AppDimensions.iconM,
+                  ),
+                ),
+                const SizedBox(width: AppDimensions.paddingM),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        isToday ? AppStrings.todayAverage : AppStrings.dayAverage,
+                        style: const TextStyle(
+                          color: AppColors.textPrimary,
+                          fontSize: AppDimensions.fontL,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        AppStrings.formatValuesFilled(filledValuesCount),
+                        style: const TextStyle(
+                          color: AppColors.textSecondary,
+                          fontSize: AppDimensions.fontM,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                AnimatedContainer(
+                  duration: AppDimensions.animationFast,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppDimensions.paddingM,
+                    vertical: AppDimensions.paddingXS,
+                  ),
+                  decoration: BoxDecoration(
+                    color: hasAverage ? averageColor : AppColors.backgroundTertiary,
+                    borderRadius: BorderRadius.circular(AppDimensions.radiusS),
+                    border: Border.all(
+                      color: hasAverage ? averageColor : AppColors.inputBorder,
+                      width: 1,
+                    ),
+                  ),
+                  child: Text(
+                    displayValue,
+                    style: TextStyle(
+                      color: hasAverage ? averageColorDark : AppColors.textTertiary,
+                      fontSize: AppDimensions.sliderValueFontSize,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
 /// Widget containing all three happiness sliders
 class HappinessSliders extends StatelessWidget {
   const HappinessSliders({super.key});
@@ -63,7 +194,7 @@ class HappinessSliders extends StatelessWidget {
                 ],
               ),
               
-              const SizedBox(height: AppDimensions.paddingL),
+              const SizedBox(height: AppDimensions.sliderSpacing),
               
               // Morning slider
               _HappinessSliderItem(

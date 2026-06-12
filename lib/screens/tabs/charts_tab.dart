@@ -97,7 +97,8 @@ class _ChartsTabState extends State<ChartsTab> {
                             _buildStatistics(),
                             const SizedBox(height: 24),
                             _buildDataManagement(),
-                            const SizedBox(height: 20),
+                            // const SizedBox(height: 20),
+                            // const SizedBox(height: AppDimensions.paddingS),
                           ],
                         ),
                       ),
@@ -494,7 +495,7 @@ class _ChartsTabState extends State<ChartsTab> {
         return _dailyData.asMap().entries.map((entry) {
           final index = entry.key;
           final d = entry.value.date;
-          if (index % 7 == 0) {
+          if (index % 14 == 0) {
             return '${d.day.toString().padLeft(2, '0')}.${d.month.toString().padLeft(2, '0')}';
           }
           return ''; // Empty for other days
@@ -511,11 +512,11 @@ class _ChartsTabState extends State<ChartsTab> {
   double _getBottomInterval() {
     switch (_selectedPeriod) {
       case ChartPeriod.days14:
-        return 2;
+        return 7;
       case ChartPeriod.days30:
         return 5;
       case ChartPeriod.days90:
-        return 7; // Show every 7 days (weekly)
+        return 14;
       case ChartPeriod.months:
         return 2;
       case ChartPeriod.years:

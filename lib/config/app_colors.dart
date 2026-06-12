@@ -30,6 +30,7 @@ class AppColors {
   static const Color calendarWeekdayText = Color(0xFF8888A0);
   static const Color calendarDayText = Color(0xFF2D2D3A);
   static const Color calendarOtherMonthText = Color(0xFFCCCCDD);
+  static const Color calendarMissingValueBorder = Color(0xFF5F0F0F); // Dark red for past days with missing values
   
   // Happiness Level Colors (gradient from sad to happy) - Pastel version
   static const List<Color> happinessGradient = [

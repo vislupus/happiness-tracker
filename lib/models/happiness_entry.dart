@@ -34,6 +34,16 @@ class HappinessEntry {
   bool get hasData =>
       morningValue != null || afternoonValue != null || eveningValue != null;
 
+  /// How many of the three daily values are filled
+  int get filledValuesCount =>
+      [morningValue, afternoonValue, eveningValue].whereType<double>().length;
+
+  /// Check if all three daily values are filled
+  bool get hasCompleteData => filledValuesCount == 3;
+
+  /// Check if at least one daily value is missing
+  bool get hasMissingValues => !hasCompleteData;
+
   /// Create a copy with updated values
   HappinessEntry copyWith({
     int? id,

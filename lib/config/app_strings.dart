@@ -41,6 +41,9 @@ class AppStrings {
   static const String afternoonHappiness = 'Afternoon';
   static const String eveningHappiness = 'Evening';
   static const String happinessLevel = 'Happiness Level';
+  static const String todayAverage = 'Today average';
+  static const String dayAverage = 'Day average';
+  static const String valuesFilled = '%d/3 values filled';
   
   // Slider Labels
   static const String sliderMorningIcon = '🌅';
@@ -153,6 +156,11 @@ class AppStrings {
   
   static String formatHappinessValue(double value) {
     return value.toStringAsFixed(1);
+  }
+
+  /// Format filled values count
+  static String formatValuesFilled(int count) {
+    return valuesFilled.replaceAll('%d', count.toString());
   }
   
   /// Format date with short month (e.g., "15 Jan")
