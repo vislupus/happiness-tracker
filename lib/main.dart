@@ -77,7 +77,6 @@ class HappinessTrackerApp extends StatelessWidget {
         primary: AppColors.primaryColor,
         secondary: AppColors.primaryLight,
         surface: AppColors.surfaceColor,
-        background: AppColors.backgroundPrimary,
       ),
       fontFamily: 'Roboto',
     );

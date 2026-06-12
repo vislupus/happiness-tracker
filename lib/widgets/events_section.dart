@@ -5,6 +5,7 @@ import '../config/app_dimensions.dart';
 import '../config/app_strings.dart';
 import '../providers/app_provider.dart';
 import '../models/event.dart';
+import 'color_selector.dart';
 
 /// Widget for displaying and managing events for a selected day
 class EventsSection extends StatefulWidget {
@@ -98,7 +99,7 @@ class _EventsSectionState extends State<EventsSection> {
             Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: AppColors.primaryColor.withOpacity(0.1),
+                color: AppColors.primaryColor.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: const Icon(
@@ -320,10 +321,10 @@ class _EventItem extends StatelessWidget {
           vertical: AppDimensions.paddingS,
         ),
         decoration: BoxDecoration(
-          color: color.withOpacity(0.15),
+          color: color.withValues(alpha: 0.15),
           borderRadius: BorderRadius.circular(AppDimensions.radiusM),
           border: Border.all(
-            color: color.withOpacity(0.3),
+            color: color.withValues(alpha: 0.3),
             width: 1,
           ),
         ),
@@ -659,7 +660,7 @@ class _EventFormSheetState extends State<_EventFormSheet> {
               ),
             ),
             const SizedBox(height: AppDimensions.paddingS),
-            _ColorSelector(
+            ColorSelector(
               selectedIndex: _selectedColorIndex,
               onSelect: (index) {
                 setState(() => _selectedColorIndex = index);
@@ -767,84 +768,6 @@ class _DateSelector extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-/// Color selector widget - all colors in one grid
-class _ColorSelector extends StatelessWidget {
-  final int selectedIndex;
-  final ValueChanged<int> onSelect;
-
-  const _ColorSelector({
-    required this.selectedIndex,
-    required this.onSelect,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Wrap(
-      spacing: AppDimensions.paddingS,
-      runSpacing: AppDimensions.paddingS,
-      children: List.generate(
-        AppColors.eventColors.length,
-        (index) => _ColorDot(
-          index: index,
-          isSelected: selectedIndex == index,
-          onTap: () => onSelect(index),
-        ),
-      ),
-    );
-  }
-}
-
-/// Individual color dot
-class _ColorDot extends StatelessWidget {
-  final int index;
-  final bool isSelected;
-  final VoidCallback onTap;
-
-  const _ColorDot({
-    required this.index,
-    required this.isSelected,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final color = AppColors.eventColors[index];
-    
-    return GestureDetector(
-      onTap: onTap,
-      child: AnimatedContainer(
-        duration: AppDimensions.animationFast,
-        width: 26,
-        height: 26,
-        decoration: BoxDecoration(
-          color: color,
-          shape: BoxShape.circle,
-          border: Border.all(
-            color: isSelected ? AppColors.textPrimary : Colors.transparent,
-            width: 2,
-          ),
-          boxShadow: isSelected
-              ? [
-                  BoxShadow(
-                    color: color.withOpacity(0.5),
-                    blurRadius: 6,
-                    offset: const Offset(0, 2),
-                  ),
-                ]
-              : null,
-        ),
-        child: isSelected
-            ? Icon(
-                Icons.check,
-                color: AppColors.needsLightText(index) ? Colors.white : AppColors.textPrimary,
-                size: 16,
-              )
-            : null,
       ),
     );
   }

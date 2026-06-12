@@ -7,6 +7,7 @@ import '../../providers/app_provider.dart';
 import '../../models/event.dart';
 import '../../models/event_day.dart';
 import '../home_screen.dart';
+import '../../widgets/color_selector.dart';
 
 /// Events management tab
 class EventsTab extends StatefulWidget {
@@ -100,7 +101,7 @@ class _EventsTabState extends State<EventsTab> {
               Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: AppColors.primaryColor.withOpacity(0.1),
+                  color: AppColors.primaryColor.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: const Icon(
@@ -243,7 +244,7 @@ class _EventsTabState extends State<EventsTab> {
           Container(
             padding: const EdgeInsets.all(24),
             decoration: BoxDecoration(
-              color: AppColors.primaryColor.withOpacity(0.1),
+              color: AppColors.primaryColor.withValues(alpha: 0.1),
               shape: BoxShape.circle,
             ),
             child: const Icon(
@@ -419,7 +420,7 @@ class _EventListItem extends StatelessWidget {
                   width: 48,
                   height: 48,
                   decoration: BoxDecoration(
-                    color: happinessColor.withOpacity(0.2),
+                    color: happinessColor.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(AppDimensions.radiusM),
                     border: Border.all(
                       color: eventColor,
@@ -593,10 +594,10 @@ class _EventDetailsSheetState extends State<_EventDetailsSheet> {
                 Container(
                   padding: const EdgeInsets.all(AppDimensions.paddingM),
                   decoration: BoxDecoration(
-                    color: eventColor.withOpacity(0.1),
+                    color: eventColor.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(AppDimensions.radiusL),
                     border: Border.all(
-                      color: eventColor.withOpacity(0.3),
+                      color: eventColor.withValues(alpha: 0.3),
                       width: 1,
                     ),
                   ),
@@ -607,7 +608,7 @@ class _EventDetailsSheetState extends State<_EventDetailsSheet> {
                         width: 56,
                         height: 56,
                         decoration: BoxDecoration(
-                          color: happinessColor.withOpacity(0.3),
+                          color: happinessColor.withValues(alpha: 0.3),
                           borderRadius: BorderRadius.circular(AppDimensions.radiusM),
                           border: Border.all(color: eventColor, width: 3),
                         ),
@@ -627,7 +628,7 @@ class _EventDetailsSheetState extends State<_EventDetailsSheet> {
                                     Text(
                                       'avg',
                                       style: TextStyle(
-                                        color: AppColors.getHappinessColorDark(widget.event.averageHappiness!).withOpacity(0.7),
+                                        color: AppColors.getHappinessColorDark(widget.event.averageHappiness!).withValues(alpha: 0.7),
                                         fontSize: AppDimensions.fontXS,
                                       ),
                                     ),
@@ -816,10 +817,10 @@ class _EventDayItem extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.all(AppDimensions.paddingM),
           decoration: BoxDecoration(
-            color: happinessColor.withOpacity(0.1),
+            color: happinessColor.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(AppDimensions.radiusM),
             border: Border.all(
-              color: happinessColor.withOpacity(0.2),
+              color: happinessColor.withValues(alpha: 0.2),
               width: 1,
             ),
           ),
@@ -830,7 +831,7 @@ class _EventDayItem extends StatelessWidget {
                 width: 44,
                 height: 44,
                 decoration: BoxDecoration(
-                  color: happinessColor.withOpacity(0.3),
+                  color: happinessColor.withValues(alpha: 0.3),
                   borderRadius: BorderRadius.circular(AppDimensions.radiusS),
                 ),
                 child: Center(
@@ -925,7 +926,7 @@ class _HappinessValueChip extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
       decoration: BoxDecoration(
         color: hasValue 
-            ? AppColors.getHappinessColor(value!).withOpacity(0.3)
+            ? AppColors.getHappinessColor(value!).withValues(alpha: 0.3)
             : AppColors.backgroundTertiary,
         borderRadius: BorderRadius.circular(4),
       ),
@@ -1151,39 +1152,11 @@ class _EventEditSheetState extends State<_EventEditSheet> {
             ),
             const SizedBox(height: AppDimensions.paddingS),
             
-            Wrap(
-              spacing: AppDimensions.paddingS,
-              runSpacing: AppDimensions.paddingS,
-              children: List.generate(
-                AppColors.eventColors.length,
-                (index) => GestureDetector(
-                  onTap: () => setState(() => _selectedColorIndex = index),
-                  child: AnimatedContainer(
-                    duration: AppDimensions.animationFast,
-                    width: 28,
-                    height: 28,
-                    decoration: BoxDecoration(
-                      color: AppColors.eventColors[index],
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: _selectedColorIndex == index
-                            ? AppColors.textPrimary
-                            : Colors.transparent,
-                        width: 2,
-                      ),
-                    ),
-                    child: _selectedColorIndex == index
-                        ? Icon(
-                            Icons.check,
-                            color: AppColors.needsLightText(index) 
-                                ? Colors.white 
-                                : AppColors.textPrimary,
-                            size: 16,
-                          )
-                        : null,
-                  ),
-                ),
-              ),
+            ColorSelector(
+              selectedIndex: _selectedColorIndex,
+              onSelect: (index) {
+                setState(() => _selectedColorIndex = index);
+              },
             ),
             
             const SizedBox(height: AppDimensions.paddingXL),

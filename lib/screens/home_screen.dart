@@ -125,7 +125,7 @@ class HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               decoration: BoxDecoration(
                 color: isSelected 
-                    ? AppColors.primaryColor.withOpacity(0.1) 
+                    ? AppColors.primaryColor.withValues(alpha: 0.1) 
                     : Colors.transparent,
                 borderRadius: BorderRadius.circular(8),
               ),

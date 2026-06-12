@@ -123,7 +123,7 @@ class _TagsSectionState extends State<TagsSection> {
                   Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: AppColors.primaryColor.withOpacity(0.1),
+                      color: AppColors.primaryColor.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: const Icon(
@@ -228,7 +228,7 @@ class _TagsSectionState extends State<TagsSection> {
                 height: AppDimensions.tagInputHeight,
                 decoration: BoxDecoration(
                   color: _isCreating 
-                      ? AppColors.primaryColor.withOpacity(0.5)
+                      ? AppColors.primaryColor.withValues(alpha: 0.5)
                       : AppColors.primaryColor,
                   borderRadius: const BorderRadius.only(
                     topRight: Radius.circular(AppDimensions.radiusM - 1),
@@ -398,7 +398,7 @@ class _TagChip extends StatelessWidget {
           boxShadow: isSelected
               ? [
                   BoxShadow(
-                    color: AppColors.primaryColor.withOpacity(0.2),
+                    color: AppColors.primaryColor.withValues(alpha: 0.2),
                     blurRadius: 4,
                     offset: const Offset(0, 2),
                   ),

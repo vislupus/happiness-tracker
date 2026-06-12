@@ -42,7 +42,7 @@ class HappinessSliders extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: AppColors.primaryColor.withOpacity(0.1),
+                      color: AppColors.primaryColor.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: const Icon(
@@ -165,12 +165,12 @@ class _HappinessSliderItemState extends State<_HappinessSliderItem> {
       padding: const EdgeInsets.all(AppDimensions.paddingM),
       decoration: BoxDecoration(
         color: _hasInteracted 
-            ? happinessColor.withOpacity(0.15) 
+            ? happinessColor.withValues(alpha: 0.15) 
             : AppColors.backgroundTertiary,
         borderRadius: BorderRadius.circular(AppDimensions.radiusM),
         border: Border.all(
           color: _hasInteracted 
-              ? happinessColor.withOpacity(0.3) 
+              ? happinessColor.withValues(alpha: 0.3) 
               : AppColors.inputBorder,
           width: 1,
         ),
@@ -241,7 +241,7 @@ class _HappinessSliderItemState extends State<_HappinessSliderItem> {
               activeTrackColor: happinessColor,
               inactiveTrackColor: AppColors.sliderInactiveTrack,
               thumbColor: AppColors.sliderThumb,
-              overlayColor: happinessColor.withOpacity(0.2),
+              overlayColor: happinessColor.withValues(alpha: 0.2),
               trackHeight: AppDimensions.sliderTrackHeight,
               thumbShape: _CustomThumbShape(
                 thumbRadius: AppDimensions.sliderThumbRadius,
@@ -357,7 +357,7 @@ class _CustomThumbShape extends SliderComponentShape {
 
     // Draw shadow
     final shadowPaint = Paint()
-      ..color = Colors.black.withOpacity(0.15)
+      ..color = Colors.black.withValues(alpha: 0.15)
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4);
     canvas.drawCircle(center + const Offset(0, 2), thumbRadius, shadowPaint);
 

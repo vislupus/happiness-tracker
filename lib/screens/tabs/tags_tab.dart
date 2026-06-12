@@ -100,7 +100,7 @@ class _TagsTabState extends State<TagsTab> {
               Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: AppColors.primaryColor.withOpacity(0.1),
+                  color: AppColors.primaryColor.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: const Icon(
@@ -243,7 +243,7 @@ class _TagsTabState extends State<TagsTab> {
           Container(
             padding: const EdgeInsets.all(24),
             decoration: BoxDecoration(
-              color: AppColors.primaryColor.withOpacity(0.1),
+              color: AppColors.primaryColor.withValues(alpha: 0.1),
               shape: BoxShape.circle,
             ),
             child: const Icon(
@@ -485,10 +485,10 @@ class _TagListItem extends StatelessWidget {
                   width: 48,
                   height: 48,
                   decoration: BoxDecoration(
-                    color: happinessColor.withOpacity(0.2),
+                    color: happinessColor.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(AppDimensions.radiusM),
                     border: Border.all(
-                      color: happinessColor.withOpacity(0.5),
+                      color: happinessColor.withValues(alpha: 0.5),
                       width: 1,
                     ),
                   ),
@@ -632,10 +632,10 @@ class _TagDetailsSheetState extends State<_TagDetailsSheet> {
                 Container(
                   padding: const EdgeInsets.all(AppDimensions.paddingM),
                   decoration: BoxDecoration(
-                    color: happinessColor.withOpacity(0.1),
+                    color: happinessColor.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(AppDimensions.radiusL),
                     border: Border.all(
-                      color: happinessColor.withOpacity(0.3),
+                      color: happinessColor.withValues(alpha: 0.3),
                       width: 1,
                     ),
                   ),
@@ -646,7 +646,7 @@ class _TagDetailsSheetState extends State<_TagDetailsSheet> {
                         width: 56,
                         height: 56,
                         decoration: BoxDecoration(
-                          color: happinessColor.withOpacity(0.3),
+                          color: happinessColor.withValues(alpha: 0.3),
                           borderRadius: BorderRadius.circular(AppDimensions.radiusM),
                         ),
                         child: Center(
@@ -665,7 +665,7 @@ class _TagDetailsSheetState extends State<_TagDetailsSheet> {
                                     Text(
                                       'avg',
                                       style: TextStyle(
-                                        color: AppColors.getHappinessColorDark(widget.tag.averageHappiness!).withOpacity(0.7),
+                                        color: AppColors.getHappinessColorDark(widget.tag.averageHappiness!).withValues(alpha: 0.7),
                                         fontSize: AppDimensions.fontXS,
                                       ),
                                     ),
@@ -819,7 +819,7 @@ class _TagDetailsSheetState extends State<_TagDetailsSheet> {
                             Icon(
                               Icons.event_busy,
                               size: 48,
-                              color: AppColors.textTertiary.withOpacity(0.5),
+                              color: AppColors.textTertiary.withValues(alpha: 0.5),
                             ),
                             const SizedBox(height: AppDimensions.paddingM),
                             const Text(
@@ -883,10 +883,10 @@ class _UsageDayItem extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.all(AppDimensions.paddingM),
           decoration: BoxDecoration(
-            color: happinessColor.withOpacity(0.1),
+            color: happinessColor.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(AppDimensions.radiusM),
             border: Border.all(
-              color: happinessColor.withOpacity(0.2),
+              color: happinessColor.withValues(alpha: 0.2),
               width: 1,
             ),
           ),
@@ -897,7 +897,7 @@ class _UsageDayItem extends StatelessWidget {
                 width: 44,
                 height: 44,
                 decoration: BoxDecoration(
-                  color: happinessColor.withOpacity(0.3),
+                  color: happinessColor.withValues(alpha: 0.3),
                   borderRadius: BorderRadius.circular(AppDimensions.radiusS),
                 ),
                 child: Center(
@@ -992,7 +992,7 @@ class _HappinessValueChip extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
       decoration: BoxDecoration(
         color: hasValue 
-            ? AppColors.getHappinessColor(value!).withOpacity(0.3)
+            ? AppColors.getHappinessColor(value!).withValues(alpha: 0.3)
             : AppColors.backgroundTertiary,
         borderRadius: BorderRadius.circular(4),
       ),
@@ -1167,7 +1167,7 @@ class _MergeTagItem extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: AppColors.primaryColor.withOpacity(0.1),
+                  color: AppColors.primaryColor.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: const Icon(Icons.label_rounded, color: AppColors.primaryColor, size: 20),

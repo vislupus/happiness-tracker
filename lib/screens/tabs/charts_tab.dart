@@ -130,7 +130,7 @@ class _ChartsTabState extends State<ChartsTab> {
               Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: AppColors.primaryColor.withOpacity(0.1),
+                  color: AppColors.primaryColor.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: const Icon(
@@ -270,7 +270,7 @@ class _ChartsTabState extends State<ChartsTab> {
           Icon(
             Icons.insert_chart_outlined,
             size: 64,
-            color: AppColors.textSecondary.withOpacity(0.5),
+            color: AppColors.textSecondary.withValues(alpha: 0.5),
           ),
           const SizedBox(height: 16),
           Text(
@@ -285,7 +285,7 @@ class _ChartsTabState extends State<ChartsTab> {
             AppStrings.startTracking,
             style: TextStyle(
               fontSize: AppDimensions.fontM,
-              color: AppColors.textSecondary.withOpacity(0.7),
+              color: AppColors.textSecondary.withValues(alpha: 0.7),
             ),
           ),
         ],
@@ -309,7 +309,7 @@ class _ChartsTabState extends State<ChartsTab> {
           horizontalInterval: 2,
           getDrawingHorizontalLine: (value) {
             return FlLine(
-              color: AppColors.textSecondary.withOpacity(0.1),
+              color: AppColors.textSecondary.withValues(alpha: 0.1),
               strokeWidth: 1,
             );
           },
@@ -398,8 +398,8 @@ class _ChartsTabState extends State<ChartsTab> {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  AppColors.primaryColor.withOpacity(0.3),
-                  AppColors.primaryColor.withOpacity(0.0),
+                  AppColors.primaryColor.withValues(alpha: 0.3),
+                  AppColors.primaryColor.withValues(alpha: 0.0),
                 ],
               ),
             ),
@@ -609,7 +609,7 @@ class _ChartsTabState extends State<ChartsTab> {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(AppDimensions.radiusM),
       ),
       child: Column(
@@ -698,7 +698,7 @@ class _ChartsTabState extends State<ChartsTab> {
     required Color color,
   }) {
     return Material(
-      color: color.withOpacity(0.1),
+      color: color.withValues(alpha: 0.1),
       borderRadius: BorderRadius.circular(AppDimensions.radiusM),
       child: InkWell(
         onTap: onTap,
